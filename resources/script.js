@@ -69,7 +69,7 @@ class Game {
     this.#changeTextContents.fillDescription = async () => {
       const node = document.querySelector("body > article");
 
-      const glitch = new GlitchText(node.textContent, `Укажите число от ${ this.number.min.toLocaleString(undefined, { useGrouping: true }) } до ${ this.number.max.toLocaleString(undefined, { useGrouping: true }) },\n что на счёт того, чтобы попробовать ${ Math.floor((this.number.min + this.number.max) / 2).toLocaleString(undefined, { useGrouping: true }) }?`);
+      const glitch = new GlitchText(node.textContent, `Укажите число от ${ this.number.min.toLocaleString(undefined, { useGrouping: true }) } до ${ this.number.max.toLocaleString(undefined, { useGrouping: true }) }.\nЧто на счёт того, чтобы попробовать ${ Math.floor((this.number.min + this.number.max) / 2).toLocaleString(undefined, { useGrouping: true }) }?`);
       for (const content of glitch){
         node.textContent = content;
         await delay(15);
