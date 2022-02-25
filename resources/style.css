@@ -171,8 +171,8 @@ section span:hover
 {
   display: block;
   position: fixed;
-  left: 9px;
   top: 5px;
+  left: 12px;
 
   font-size: calc( 20px + 0.6vw );
   font-family: monospace;

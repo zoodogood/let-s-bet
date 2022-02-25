@@ -285,6 +285,7 @@ class Counter {
     this.node.className = "counter";
 
     document.body.append(this.node);
+    this.node.title = "Счётчик";
     this.count(0);
   }
 
