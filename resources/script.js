@@ -38,7 +38,6 @@ class Game {
     await this.#changeTextContents();
 
     this.#setInput();
-    this.counter = new Counter();
   }
 
 
@@ -68,16 +67,43 @@ class Game {
   async #changeTextContents(){
     this.#changeTextContents.fillDescription = async () => {
       const node = document.querySelector("body > article");
+      const previous = node.textContent.match(/\d((?:\d|\s)*\d)?/g);
 
-      const glitch = new GlitchText(node.textContent, `Укажите число от ${ this.number.min.toLocaleString(undefined, { useGrouping: true }) } до ${ this.number.max.toLocaleString(undefined, { useGrouping: true }) }.\nЧто на счёт того, чтобы попробовать ${ Math.floor((this.number.min + this.number.max) / 2).toLocaleString(undefined, { useGrouping: true }) }?`);
-      for (const content of glitch){
-        node.textContent = content;
-        await delay(15);
+      const values = [
+        {
+          id: "min",
+          previous: "#",
+          next: this.number.min.toLocaleString(undefined, { useGrouping: true }),
+        },
+        {
+          id: "max",
+          previous: "#",
+          next: this.number.max.toLocaleString(undefined, { useGrouping: true }),
+        },
+        {
+          id: "recommended",
+          previous: previous[2],
+          next: Math.floor((this.number.min + this.number.max) / 2).toLocaleString(undefined, { useGrouping: true }),
+        }
+      ]
+
+      values.forEach(value => value.iterator = new GlitchText(value.previous, value.next, {step: 3})[Symbol.iterator]());
+
+      while (true){
+        const data = values.map(value => value.iterator.next());
+        if (data.every(data => data.done === true))
+          break;
+
+        const [min, max, recommended] = data.map(data => data.value);
+        node.innerHTML = `Укажите число от <big>${ min ?? values[0].next }</big> до <big>${ max ?? values[1].next }</big>.\n<small>Что на счёт того, чтобы попробовать ${ recommended ?? values[2].next }?</small>`;
+
+        await delay(20);
       }
+
     }
 
     this.#changeTextContents.fillButton = async () => {
-      const glitch = new GlitchText(this.element.textContent, "Отдать число", {speed: 5});
+      const glitch = new GlitchText(this.element.textContent, "Отдать число", {step: 75});
       for (const content of glitch){
         this.element.textContent = content;
         await delay(5);
@@ -101,7 +127,18 @@ class Game {
       }
     }
 
-    await this.#changeTextContents.fillDescription();
+
+
+    await
+    (async () => {
+      const node = document.querySelector("body > article");
+      const glitch = new GlitchText(node.textContent, "Укажите число от <big>0</big> до <big>1 000 000</big>.\n<small>Что на счёт того, чтобы попробовать 500 000?</small>");
+
+      for (const content of glitch){
+        node.innerHTML = content;
+        await delay(15);
+      }
+    })();
     await this.#changeTextContents.fillButton();
   }
 
@@ -127,6 +164,9 @@ class Game {
       );
       return;
     }
+
+    if (!this.counter)
+      this.counter = new Counter();
 
     this.user.score++;
     this.counter.count( this.user.score );
@@ -169,7 +209,7 @@ class Game {
 
     (async () => {
       const node = document.querySelector("body > article");
-      const glitch = new GlitchText(node.textContent, `Всего ${ ending(this.user.score, "шаг", "ов", "", "") }, впечатляюще!`, {speed: 5});
+      const glitch = new GlitchText(node.textContent, `Всего ${ ending(this.user.score, "шаг", "ов", "", "") }, впечатляюще!`, {step: 75});
       for (const content of glitch) {
         node.textContent = content;
         await delay(30);
@@ -192,7 +232,7 @@ class Game {
 
   }
 
-  #failHandler(){
+  async #failHandler(){
     this.user.victory = false;
     alert("Вы очень, очень-очень плохой игрок. Ну-с. Спор Вы выиграли несправившись с таким простым заданием. Самый эффективный способ найти число — всегда указывать значение между минимальным и максимальным возможным. Если следовать этому правилу, то число в худшем исходе Вы найдёте всего за 21 шаг. За 150 ходов-же можно отыскать число с 45 нулями.. очень много\nВ программировании такой простой приём называется \"Бинарный поиск\" и знатно оптимизирует некоторые алгоритмы");
 
@@ -209,7 +249,7 @@ class Game {
 
     (async () => {
       const node = document.querySelector("body > article");
-      const glitch = new GlitchText(node.textContent, `Упс..`, {speed: 5});
+      const glitch = new GlitchText(node.textContent, `Упс..`, {step: 75});
       for (const content of glitch) {
         node.textContent = content;
         await delay(30);
@@ -244,7 +284,7 @@ class InputHandler {
       const value = this.node.value;
 
       if (value > 1_000_000)
-        this.node.value = 1_000_000;
+        this.node.value = this.node.value.slice(0, -1);
 
       if (value < 0)
         this.node.value = 0;
@@ -255,10 +295,10 @@ class InputHandler {
     this.node.addEventListener("change", () => {
       const value = this.node.value;
 
-      if (value > this.game.number.max)
+      if (value >= this.game.number.max)
         this.node.value = this.game.number.max - 1;
 
-      if (value < this.game.number.min)
+      if (value <= this.game.number.min)
         this.node.value = this.game.number.min + 1;
 
     });

@@ -1,9 +1,9 @@
 class GlitchText {
-  constructor(from = "", to = "hello, world", {speed = 1} = {}){
+  constructor(from = "", to = "hello, world", {step = 15} = {}){
     this.from = from;
     this.to   = to;
 
-    this.speed = speed;
+    this.step = step;
 
     this[Symbol.iterator] = this.iteratorFunction;
   }
@@ -40,7 +40,7 @@ class GlitchText {
 
         const step = Math.min(
           Math.abs(targetCode - charCode),
-          Math.ceil(15 * this.speed)
+          this.step
         );
         word[i] = String.fromCharCode( isUpper ? charCode + step : charCode - step  );
       });

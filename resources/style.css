@@ -28,6 +28,16 @@ a
   text-decoration: none;
 }
 
+big
+{
+  font-size: 1.07em;
+}
+
+small
+{
+  font-size: 0.93em;
+}
+
 input
 {
   border: none;
