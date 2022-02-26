@@ -164,6 +164,7 @@ section span:hover
 .ping-animation
 {
   text-shadow: 0 0 red;
+  text-decoration: underline red;
 }
 
 
