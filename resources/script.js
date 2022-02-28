@@ -95,7 +95,7 @@ class Game {
           break;
 
         const [min, max, recommended] = data.map(data => data.value);
-        node.innerHTML = `Укажите число от <big>${ min ?? values[0].next }</big> до <big>${ max ?? values[1].next }</big>.\n<small>Что на счёт того, чтобы попробовать ${ recommended ?? values[2].next }?</small>`;
+        node.innerHTML = `Укажите число от <pre><big>${ min ?? values[0].next }</big> до <big>${ max ?? values[1].next }</big></pre>.\n<small>Что на счёт того, чтобы попробовать ${ recommended ?? values[2].next }?</small>`;
 
         await delay(20);
       }
@@ -132,7 +132,7 @@ class Game {
     await
     (async () => {
       const node = document.querySelector("body > article");
-      const glitch = new GlitchText(node.textContent, "Укажите число от <big>0</big> до <big>1 000 000</big>.\n<small>Что на счёт того, чтобы попробовать 500 000?</small>");
+      const glitch = new GlitchText(node.textContent, "Укажите число от <pre><big>0</big> до <big>1 000 000</big></pre>.\n<small>Что на счёт того, чтобы попробовать 500 000?</small>");
 
       for (const content of glitch){
         node.innerHTML = content;
