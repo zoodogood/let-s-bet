@@ -6,9 +6,10 @@ class MainElement {
 class LeaderBoard {
   constructor(game){
     this.game = game;
+    this.#setHandlers();
   }
 
-  setHandlers(){
+  #setHandlers(){
     game.events.on("fail", async ({ game }) => {
       const options = {
         method: "POST",
@@ -43,7 +44,3 @@ class LeaderBoard {
     })
   }
 }
-
-
-
-console.log( new LeaderBoard(globalThis.game) );
