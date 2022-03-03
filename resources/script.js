@@ -7,7 +7,7 @@ class Game {
   constructor({ button }){
     this.element = document.querySelector(button);
 
-    this.events = new EventEmmiter();
+    this.events = new EventEmitter();
 
     this.number = {
       min: 0,
