@@ -10,7 +10,7 @@ class LeaderBoard {
   }
 
   #setHandlers(){
-    game.events.on("fail", async ({ game }) => {
+    this.game.events.on("fail", async ({ game }) => {
       const options = {
         method: "POST",
         mode: "cors",
@@ -26,7 +26,7 @@ class LeaderBoard {
       fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/score/>100?method=increment`, options);
     })
 
-    game.events.on("victory", async ({ game, score }) => {
+    this.game.events.on("victory", async ({ game, score }) => {
       const options = {
         method: "POST",
         mode: "cors",
@@ -44,3 +44,5 @@ class LeaderBoard {
     })
   }
 }
+
+new LeaderBoard( globalThis.game );
