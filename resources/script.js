@@ -7,6 +7,8 @@ class Game {
   constructor({ button }){
     this.element = document.querySelector(button);
 
+    this.events = new EventEmmiter();
+
     this.number = {
       min: 0,
       max: 1_000_000,
@@ -165,7 +167,7 @@ class Game {
       return;
     }
 
-    this.events.emit("furnish");
+    this.events.emit("furnish", { game: this, value: +this.input.node.value });
 
     if (!this.counter)
       this.counter = new Counter();
