@@ -23,7 +23,7 @@ class LeaderBoard {
         referrerPolicy: "no-referrer",
       }
 
-      fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/score/>100?method=increment`, options);
+      fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/score/BIG_100?method=increment`, options);
     })
 
     this.game.events.on("victory", async ({ game, score }) => {
@@ -39,7 +39,7 @@ class LeaderBoard {
         referrerPolicy: "no-referrer",
       }
 
-      fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/score/=${ score }?method=increment`, options)
+      fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/score/EQUAL_${ score }?method=increment`, options)
         .catch(err => console.log(err));
     })
   }
