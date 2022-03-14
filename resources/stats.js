@@ -33,9 +33,11 @@ class Page {
         redirect: "follow",
         referrerPolicy: "no-referrer"
       };
-      const response = await fetch(BASE_URL, fetchOptions);
+      const response = await fetch(BASE_URL, fetchOptions)
+        .catch(() => this.stats.general = null);
+
       if (!response)
-        return this.stats.general = null;
+        return;
 
       const data = await response.json();
       this.stats.general = data;
@@ -87,19 +89,25 @@ class Page {
         {
           text: "Время в игре",
           value: (() => {
-            const slice = this.stats.general.spendTime % 86_400_000;
-            const days  = this.stats.general.spendTime / 86_400_000;
-            const labels = new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(slice);
+            let slice = this.stats.general.spendTime;
 
-            return `${ ~~days }д, ${ labels }с`;
+            const days  = slice / 86_400_000;
+            const hours = (slice % 86_400_000) / 3_600_000;
+            const minutes = (slice % 3_600_000) / 60_000;
+            const seconds = (slice % 60_000) / 1000;
+
+            return `${ ~~days }д, ${ ("00" + ~~hours).slice(-2) }:${ ("00" + ~~minutes).slice(-2) }:${ ("00" + ~~seconds).slice(-2) }с`;
           })()
         },
         {
           text: "Самое быстрое прохождение",
           value: (() => {
-            const timestamp = this.stats.general.recordTimeEnd;
-            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3}).format(timestamp)
-              .replace(",", ":");
+            let slice = this.stats.general.recordTimeEnd;
+
+            const seconds = (slice) / 1000;
+            const milliseconds = slice % 1000;
+
+            return `${ ~~seconds }.${milliseconds}с`;
           })()
         },
         {
@@ -109,7 +117,12 @@ class Page {
                 .reduce((acc, count) => acc + count, 0);
 
             const average = ~~(this.stats.general.spendTime / total);
-            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(average);
+
+            const hours = (average % 86_400_000) / 3_600_000;
+            const minutes = (average % 3_600_000) / 60_000;
+            const seconds = (average % 60_000) / 1000;
+
+            return `${ ("00" + ~~hours).slice(-2) }:${ ("00" + ~~minutes).slice(-2) }:${ ("00" + ~~seconds).slice(-2) }`;
           })()
         }
       ],
@@ -168,19 +181,25 @@ class Page {
         {
           text: "Время в игре",
           value: (() => {
-            const slice = this.stats.user.spendTime % 86_400_000;
-            const days  = this.stats.user.spendTime / 86_400_000;
-            const labels = new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(slice);
+            let slice = this.stats.general.spendTime;
 
-            return `${ ~~days }д, ${ labels }с`;
+            const days  = slice / 86_400_000;
+            const hours = (slice % 86_400_000) / 3_600_000;
+            const minutes = (slice % 3_600_000) / 60_000;
+            const seconds = (slice % 60_000) / 1000;
+
+            return `${ ~~days }д, ${ ("00" + ~~hours).slice(-2) }:${ ("00" + ~~minutes).slice(-2) }:${ ("00" + ~~seconds).slice(-2) }с`;
           })()
         },
         {
           text: "Самое быстрое прохождение",
           value: (() => {
-            const timestamp = this.stats.user.recordTimeEnd;
-            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3}).format(timestamp)
-              .replace(",", ":");
+            let slice = this.stats.user.recordTimeEnd;
+
+            const seconds = (slice) / 1000;
+            const milliseconds = slice % 1000;
+
+            return `${ ~~seconds }.${milliseconds}с`;
           })()
         },
         {
@@ -190,7 +209,12 @@ class Page {
                 .reduce((acc, count) => acc + count, 0);
 
             const average = ~~(this.stats.user.spendTime / total);
-            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(average);
+
+            const hours = (average % 86_400_000) / 3_600_000;
+            const minutes = (average % 3_600_000) / 60_000;
+            const seconds = (average % 60_000) / 1000;
+
+            return `${ ("00" + ~~hours).slice(-2) }:${ ("00" + ~~minutes).slice(-2) }:${ ("00" + ~~seconds).slice(-2) }`;
           })()
         }
       ],
