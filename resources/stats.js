@@ -50,6 +50,10 @@ class Page {
 
       this.stats.user.recordTimeEnd = localStorage["recordTimeEnd"] ?? 0;
       this.stats.user.spendTime = localStorage["spendTime"] ?? 0;
+
+      this.stats.user.lastNumber     = localStorage["lastNumber"];
+      this.stats.user.leastNumber    = localStorage["leastNumber"];
+      this.stats.user.greatestNumber = localStorage["greatestNumber"];
     }
 
     this.fetchAllScore.fetchServerData = fetchServerData;
@@ -125,6 +129,21 @@ class Page {
 
               return `${ ("00" + ~~hours).slice(-2) }:${ ("00" + ~~minutes).slice(-2) }:${ ("00" + ~~seconds).slice(-2) }`;
             })()
+          },
+          {
+            _handler: () => "<br>"
+          },
+          {
+            text: "Последнее угаданное число",
+            value: this.stats.general.lastNumber ?? "*не существует*"
+          },
+          {
+            text: "Наибольшее отгаданное",
+            value: this.stats.general.leastNumber ?? "*отсуствует*"
+          },
+          {
+            text: "Наименьшее из отгаданных",
+            value: this.stats.general.greatestNumber ?? "*сыграйте, чтобы появилось*"
           }
         ],
 
@@ -161,7 +180,7 @@ class Page {
               .filter(key => key.startsWith("EQUAL_"))
               .map(key => +key.slice(6));
 
-            steps.sort((a, b) => b - a);
+            steps.sort((a, b) => a - b);
             return steps.map(stepCount => ({ text: getRandomText(stepCount), value: `${ ending( getVictorySize(stepCount), "раз", "", "", "а" ) } (${ getPercentage(stepCount) }%);`}));
           })()
         ]
@@ -221,6 +240,21 @@ class Page {
 
               return `${ ("00" + ~~hours).slice(-2) }:${ ("00" + ~~minutes).slice(-2) }:${ ("00" + ~~seconds).slice(-2) }`;
             })()
+          },
+          {
+            _handler: () => "<br>"
+          },
+          {
+            text: "Последнее угаданное число",
+            value: this.stats.general.lastNumber ?? "*не существует*"
+          },
+          {
+            text: "Наибольшее отгаданное",
+            value: this.stats.general.leastNumber ?? "*отсуствует*"
+          },
+          {
+            text: "Наименьшее из отгаданных",
+            value: this.stats.general.greatestNumber ?? "*сыграйте, чтобы появилось*"
           }
         ],
 
@@ -257,7 +291,7 @@ class Page {
               .filter(key => key.startsWith("EQUAL_"))
               .map(key => +key.slice(6));
 
-            steps.sort((a, b) => b - a);
+            steps.sort((a, b) => a - b);
             return steps.map(stepCount => ({ text: getRandomText(stepCount), value: `${ ending( getVictorySize(stepCount), "раз", "", "", "а" ) } (${ getPercentage(stepCount) }%);`}));
           })()
         ]

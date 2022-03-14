@@ -26,6 +26,11 @@ p
   opacity: 0.7;
 }
 
+.icon
+{
+  font-family: Icons;
+}
+
 header
 {
   display: flex;
@@ -137,6 +142,7 @@ footer a
   border-color: var( --mainColor ) !important;
 }
 
+
 footer a span
 {
   transition: color 1s;
@@ -145,10 +151,8 @@ footer a span
   filter: grayscale(0.5);
 }
 
-.icon
-{
-  font-family: Icons;
-}
+
+
 
 
 
@@ -171,10 +175,14 @@ footer a span
     max-width: none;
     margin-bottom: 3vh;
   }
-
   header *
   {
     font-size: 0.8em;
+  }
+
+  header a
+  {
+    font-size: 0;
   }
 }
 
