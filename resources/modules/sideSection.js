@@ -76,7 +76,7 @@ class LeaderBoard {
     localStorage["visits"] = +(localStorage["visits"] ?? 0) + 1;
   }
 
-  #takeSpendTime(){
+  async #takeSpendTime(){
     const slice = Date.now() - this.startsTimestamp;
 
     const options = {

@@ -91,7 +91,12 @@ class Page {
         },
         {
           text: "В среднем",
-          value: this.stats.general.visitors
+          value: (() => {
+            const total = Object.values(this.stats.general.score)
+                .reduce((acc, count) => acc + count, 0);
+
+            const average = ~~(this.stats.general.spendTime / total);
+          })()
         }
       ],
 
