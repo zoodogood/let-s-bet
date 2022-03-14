@@ -2,7 +2,7 @@
 <html lang = "ru" dir = "ltr">
   <head>
     <meta charset = "utf-8">
-    <title></title>
+    <title>Статистика</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
 
     <base href = "./"></base>
@@ -11,14 +11,47 @@
     <meta property = "og:description" content = "" />
     <meta property = "og:image"       content = "" />
 
-    <link rel="stylesheet" href="style.css">
+    <link rel = "stylesheet" href = "resources/style.css">
+    <link rel = "stylesheet" href = "resources/stats.css">
   </head>
   <body>
+    <header>
+      <a href = "index.html"><img width = "32px" src = "resources/img/link.ico"></img>Перейти на<br>главную</a>
+      <span class = "statsTypeChanger" id = "generalStats">Общая статистика</span>
+      <span class = "statsTypeChanger" id = "userStats">Ваша статистика</span>
+    </header>
+    <section>
+      <ul>
+        <p>Основная информация</p>
+        <li><b>Количество игроков:</b> 5</li>
+        <li><b>Всего окончено игр:</b> 28</li>
+        <li><b>Рекордное прохождение:</b> 2 шага</li>
+      </ul>
+      <ul>
+        <p>Шаги</p>
+        <li><b>За 99 шагов:</b> 5</li>
+        <li><b>Всего окончено игр:</b> 28</li>
+        <li><b>Рекордное прохождение:</b> 2 шага</li>
+      </ul>
+    </section>
+    <footer>
+      <a href = "https://github.com/zoodogood/let-s-bet" target = "_blank" class = "underline--hover">
+        <span title = "ГитХаб страница" class = "icon"></span>
+      </a>
+      <a href = "index.html" class = "underline--hover">
+        <span title = "Вернуться на главную страницу" class = "icon"></span>
+      </a>
+      <a class = "underline--hover" onclick = "confirm(`Я только работаю над собственным средством обратной связи. Ваще хз когда оно будет`)">
+        <span title = "Отправьте анонимный отзыв" class = "icon"></span>
+      </a>
+    </footer>
 
+  <script src = "resources/modules/Util.js"></script>
+  <script src = "resources/modules/EventEmitter.js"></script>
+  <script src = "resources/modules/GlitchText.js"></script>
+  <script src = "resources/modules/LetItSnow.js"></script>
 
+  <script src = "resources/stats.js" charset = "utf-8"></script>
   </body>
-  <script>
-    console.log(window.location.href);
-    window.location.href = "index.html"
-  </script>
+
 </html>

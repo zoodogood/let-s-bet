@@ -6,13 +6,14 @@ globalThis.snow = new SnowBackground();
 class Game {
   constructor({ button }){
     this.element = document.querySelector(button);
+    this.node = document.querySelector("body > main");
 
     this.events = new EventEmitter();
 
     this.number = {
       min: 0,
       max: 1_000_000,
-      value: 1//random(0, 1_000_000)
+      value: random(0, 1_000_000)
     }
 
     this.user = {
@@ -40,6 +41,7 @@ class Game {
     await this.#changeTextContents();
 
     this.#setInput();
+    this.events.emit("starts");
   }
 
 
@@ -55,7 +57,7 @@ class Game {
 
   #removeSomeNodes(){
     this.constructor.nodesBeRemoved.forEach(async query => {
-      let node = document.querySelector(query);
+      let node = this.node.querySelector(query);
       node.classList.add("removed");
 
       await delay(900);
@@ -63,12 +65,12 @@ class Game {
     });
   }
 
-  static nodesBeRemoved = ["body > section > span"];
+  static nodesBeRemoved = ["section > span"];
 
 
   async #changeTextContents(){
     this.#changeTextContents.fillDescription = async () => {
-      const node = document.querySelector("body > article");
+      const node = this.node.querySelector("article");
       const previous = node.textContent.match(/\d((?:\d|\s)*\d)?/g);
 
       const values = [
@@ -113,7 +115,7 @@ class Game {
     }
 
     this.#changeTextContents.fillParagraph = async (isUpper) => {
-      const node = document.querySelector("body > p");
+      const node = this.node.querySelector("p");
 
       const prefix = this.user.score === 1 ? "загаданное число " : this.user.score === 2 ? "число " : "";
       const direction = isUpper ? "больше" : "меньше";
@@ -133,7 +135,7 @@ class Game {
 
     await
     (async () => {
-      const node = document.querySelector("body > article");
+      const node = this.node.querySelector("article");
       const glitch = new GlitchText(node.textContent, "Укажите число от <pre><big>0</big> до <big>1 000 000</big></pre>.\n<small>Что на счёт того, чтобы попробовать 500 000?</small>");
 
       for (const content of glitch){
@@ -146,7 +148,7 @@ class Game {
 
 
   #setInput(){
-    const node = document.querySelector("body > input");
+    const node = this.node.querySelector("input");
     node.style.display = "block";
 
 
@@ -204,7 +206,7 @@ class Game {
     snow.storm = true;
 
     (async () => {
-      const node = document.querySelector("body > p");
+      const node = this.node.querySelector("p");
       const glitch = new GlitchText(node.textContent, `Число — ${ this.number.value }`);
       for (const content of glitch) {
         node.textContent = content;
@@ -213,7 +215,7 @@ class Game {
     })();
 
     (async () => {
-      const node = document.querySelector("body > article");
+      const node = this.node.querySelector("article");
       const glitch = new GlitchText(node.textContent, `Всего ${ ending(this.user.score, "шаг", "ов", "", "") }, впечатляюще!`, {step: 75});
       for (const content of glitch) {
         node.textContent = content;
@@ -227,7 +229,7 @@ class Game {
     })();
 
     (async () => {
-      const node = document.querySelector("body > input");
+      const node = this.node.querySelector("input");
       const glitch = new GlitchText(node.getAttribute("placeholder"), `Победа`);
       for (const content of glitch) {
         node.setAttribute("placeholder", content);
@@ -245,7 +247,7 @@ class Game {
     snow.storm = true;
 
     (async () => {
-      const node = document.querySelector("body > p");
+      const node = this.node.querySelector("p");
       const glitch = new GlitchText(node.textContent, `Число — ${ this.number.value }`);
       for (const content of glitch) {
         node.textContent = content;
@@ -254,7 +256,7 @@ class Game {
     })();
 
     (async () => {
-      const node = document.querySelector("body > article");
+      const node = this.node.querySelector("article");
       const glitch = new GlitchText(node.textContent, `Упс..`, {step: 75});
       for (const content of glitch) {
         node.textContent = content;
@@ -268,7 +270,7 @@ class Game {
     })();
 
     (async () => {
-      const node = document.querySelector("body > input");
+      const node = this.node.querySelector("input");
       const glitch = new GlitchText(node.getAttribute("placeholder"), `Проигрыш`);
       for (const content of glitch) {
         node.setAttribute("placeholder", content);

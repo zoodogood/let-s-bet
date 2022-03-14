@@ -1,0 +1,174 @@
+@font-face {
+  font-family: "Icons";
+  src: url("iconpack.ttf");
+}
+
+*
+{
+  text-align: left;
+}
+
+body
+{
+  box-shadow: 0px 9px 20px 0px rgba(34, 60, 80, 0.30) inset;
+}
+
+p
+{
+  align-self: flex-start;
+  font-size: 1.1em;
+  font-family: cursive;
+  opacity: 0.7;
+}
+
+header
+{
+  display: flex;
+  flex-grow: 0;
+  align-items: center;
+  width: 100vw;
+  padding: 20px;
+}
+
+header > *
+{
+  margin-left: 1vw;
+  margin-right: 1vw;
+  transition: margin 100ms;
+}
+
+header *:hover
+{
+  cursor: pointer;
+  color: var( --mainColor );
+}
+
+header a
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: auto;
+  margin-left: 0;
+  line-height: 1.2;
+}
+
+header a img
+{
+  margin-right: 0.5vw;
+}
+
+section
+{
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+ul
+{
+  width: 50vw;
+  max-width: 700px;
+  padding: calc(1.5vw + 20px);
+  box-sizing: border-box;
+  display: flex;
+
+  list-style: inside;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+li
+{
+  line-height: 1.7;
+}
+
+
+footer
+{
+  flex-grow: 0;
+}
+
+
+.underline, .underline--hover:hover
+{
+  margin-bottom: -6px;
+  padding-bottom: 2px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+
+footer
+{
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer a
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  margin-left: calc(20px + 0.5vw);
+  margin-right: calc(20px + 0.5vw);
+  font-size: 40px;
+
+  border-color: var( --mainColor ) !important;
+}
+
+footer a span
+{
+  transition: color 1s;
+  color: var( --mainColor );
+  opacity: 0.2;
+  filter: grayscale(0.5);
+}
+
+.icon
+{
+  font-family: Icons;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 740px)
+{
+  section
+  {
+    flex-direction: column;
+  }
+
+  section ul
+  {
+    width: 100vw;
+    max-width: none;
+    margin-bottom: 3vh;
+  }
+}
+
+
+#fetchError
+{
+  align-self: center;
+  width: 100vw;
+  text-align: center;
+}

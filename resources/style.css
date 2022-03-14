@@ -10,6 +10,7 @@
 {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
   margin: 0px;
   padding: 0px;
 
@@ -52,7 +53,7 @@ input
 body
 {
   display: flex;
-  min-height: 90vh;
+  min-height: 100vh;
   width: 100vw;
 
   justify-content: center;
@@ -60,6 +61,15 @@ body
 
   flex-direction: column;
 }
+
+main
+{
+  margin-bottom: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 
 p
