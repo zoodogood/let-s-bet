@@ -45,6 +45,9 @@ class Page {
       this.stats.user = {};
       this.stats.user.visits = localStorage["visits"] || 0;
       this.stats.user.score  = JSON.parse(localStorage["score"] ?? "{}");
+
+      this.stats.user.recordTimeEnd = localStorage["recordTimeEnd"] ?? 0;
+      this.stats.user.spendTime = localStorage["spendTime"] ?? 0;
     }
 
 
@@ -83,11 +86,21 @@ class Page {
         },
         {
           text: "Время в игре",
-          value: this.stats.general.visitors
+          value: (() => {
+            const slice = this.stats.general.spendTime % 86_400_000;
+            const days  = this.stats.general.spendTime / 86_400_000;
+            const labels = new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(slice);
+
+            return `${ ~~days }д, ${ labels }с`;
+          })()
         },
         {
           text: "Самое быстрое прохождение",
-          value: this.stats.general.visitors
+          value: (() => {
+            const timestamp = this.stats.general.recordTimeEnd;
+            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3}).format(timestamp)
+              .replace(",", ":");
+          })()
         },
         {
           text: "В среднем",
@@ -96,6 +109,7 @@ class Page {
                 .reduce((acc, count) => acc + count, 0);
 
             const average = ~~(this.stats.general.spendTime / total);
+            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(average);
           })()
         }
       ],
@@ -139,11 +153,84 @@ class Page {
       ],
 
       userMain: [
+        {
+          text: "Вы окончили игр",
+          value: Object.values(this.stats.user.score)
+              .reduce((acc, count) => acc + count, 0)
+        },
+        {
+          text: "Посещений сайта",
+          value: this.stats.user.visits
+        },
+        {
+          _handler: () => "<br>"
+        },
+        {
+          text: "Время в игре",
+          value: (() => {
+            const slice = this.stats.user.spendTime % 86_400_000;
+            const days  = this.stats.user.spendTime / 86_400_000;
+            const labels = new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(slice);
 
+            return `${ ~~days }д, ${ labels }с`;
+          })()
+        },
+        {
+          text: "Самое быстрое прохождение",
+          value: (() => {
+            const timestamp = this.stats.user.recordTimeEnd;
+            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3}).format(timestamp)
+              .replace(",", ":");
+          })()
+        },
+        {
+          text: "В среднем",
+          value: (() => {
+            const total = Object.values(this.stats.user.score)
+                .reduce((acc, count) => acc + count, 0);
+
+            const average = ~~(this.stats.user.spendTime / total);
+            return new Intl.DateTimeFormat("ru-ru", {hour: "2-digit", minute: "2-digit", second: "2-digit"}).format(average);
+          })()
+        }
       ],
 
       userSteps: [
+        {
+          text: "Рекордное прохождение",
+          value: (() => {
+            const steps = Object.keys(this.stats.user.score)
+              .filter(key => key.startsWith("EQUAL_"))
+              .map(key => +key.slice(6));
 
+            const minimal = Math.min(...steps);
+
+            return ending(minimal, "шаг", "ов", "", "а");
+          })()
+        },
+        {
+          text: "Более чем за 100 шагов",
+          value: this.stats.user.score.BIG_100 ?? 0
+        },
+        {
+          _handler: () => "<br>"
+        },
+        ...(() => {
+          const getRandomText = (stepCount) => [`За ${ ending(stepCount, "шаг", "ов", "", "а") }`, `Выиграно за ${ stepCount }`].random();
+
+          const total = Object.values(this.stats.user.score)
+              .reduce((acc, count) => acc + count, 0);
+          const getPercentage = (stepCount) => getVictorySize(stepCount) / total * 100;
+          const getVictorySize = (stepCount) => table[`EQUAL_${ stepCount }`];
+
+          const table = this.stats.user.score;
+          const steps = Object.keys(table)
+            .filter(key => key.startsWith("EQUAL_"))
+            .map(key => +key.slice(6));
+
+          steps.sort((a, b) => b - a);
+          return steps.map(stepCount => ({ text: getRandomText(stepCount), value: `${ ending( getVictorySize(stepCount), "раз", "", "", "а" ) } (${ getPercentage(stepCount) }%);`}));
+        })()
       ]
     }
 
