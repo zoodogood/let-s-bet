@@ -55,7 +55,7 @@ class LeaderBoard {
 
   }
 
-  #takeVisit(){
+  async #takeVisit(){
     const options = {
       method: "POST",
       mode: "cors",
@@ -69,10 +69,11 @@ class LeaderBoard {
     }
 
     if (!("visits" in localStorage))
-      fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/uniqueUser?method=increment`, options);
+      await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/uniqueUser?method=increment`, options);
 
-    fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/visits?method=increment`, options);
-    localStorage["visits"] = (localStorage["visits"] ?? 0) + 1;
+
+    await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/visits?method=increment`, options);
+    localStorage["visits"] = +(localStorage["visits"] ?? 0) + 1;
   }
 
   #takeSpendTime(){
@@ -91,11 +92,11 @@ class LeaderBoard {
       body: slice
     }
 
-    fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/spendTime?method=increment`, options);
-    fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/recordTimeEnd?method=minimal`, options);
+    await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/spendTime?method=increment`, options);
+    await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/recordTimeEnd?method=minimal`, options);
 
-    localStorage["spendTime"] = (localStorage["spendTime"] ?? 0) + slice;
-    localStorage["recordTimeEnd"] = Math.min((localStorage["recordTimeEnd"] ?? 0), slice);
+    localStorage["spendTime"] = +(localStorage["spendTime"] ?? 0) + slice;
+    localStorage["recordTimeEnd"] = Math.min(+(localStorage["recordTimeEnd"] ?? 0), slice);
   }
 }
 
