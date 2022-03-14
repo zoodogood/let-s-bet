@@ -48,7 +48,7 @@ class LeaderBoard {
       }
 
       await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/score/EQUAL_${ score }?method=increment`, options);
-
+      console.log();
       const userScore = JSON.parse(localStorage["score"] ?? "{}");
       userScore[`EQUAL_${ score }`] = (userScore[`EQUAL_${ score }`] ?? 0) + 1;
       localStorage["score"] = JSON.stringify(userScore);
