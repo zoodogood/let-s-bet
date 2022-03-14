@@ -76,7 +76,7 @@ class Page {
         },
         {
           text: "Посещений сайта",
-          value: this.stats.general.visitors
+          value: this.stats.general.visits
         },
         {
           _handler: () => "<br>"

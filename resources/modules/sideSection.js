@@ -96,7 +96,7 @@ class LeaderBoard {
     await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/recordTimeEnd?method=minimal`, options);
 
     localStorage["spendTime"] = +(localStorage["spendTime"] ?? 0) + slice;
-    localStorage["recordTimeEnd"] = Math.min(+(localStorage["recordTimeEnd"] ?? 0), slice);
+    localStorage["recordTimeEnd"] = Math.min(+(localStorage["recordTimeEnd"] ?? Infinity), slice);
   }
 }
 
