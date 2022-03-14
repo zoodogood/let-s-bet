@@ -52,13 +52,12 @@ class Page {
       this.stats.user.spendTime = localStorage["spendTime"] ?? 0;
     }
 
-
-    await fetchServerData();
-    fetchUserData();
+    this.fetchAllScore.fetchServerData = fetchServerData;
+    this.fetchAllScore.fetchUserData = fetchUserData;
     this.displayStats( this.statusType );
   }
 
-  displayStats(statusType){
+  async displayStats(statusType){
     const isBlueTheme = statusType === "general";
     const node = document.querySelector("body > section");
 
@@ -68,7 +67,8 @@ class Page {
     const toTag = ({text, value, _handler, ...others}) => _handler ? _handler({text, value, ...others}) : `<li><b>${ text }:</b> ${ value }</li>`;
     const data = {};
 
-    const initGeneralData = () => {
+    const initGeneralData = async () => {
+      await this.fetchAllScore.fetchServerData();
       data.general = {
         main: [
           {
@@ -167,8 +167,8 @@ class Page {
         ]
       }
     }
-
     const initUserData = () => {
+      this.fetchAllScore.fetchUserData();
       data.user = {
         main: [
           {
@@ -264,15 +264,15 @@ class Page {
       }
     }
 
-    statusType === "general" ? initGeneralData() : initUserData();
+    statusType === "general" ? await initGeneralData() : initUserData();
 
     node.innerHTML = `<ul><p>Основная информация</p>${ data[ statusType ].main.map(toTag).join("") }</ul>  <ul><p>Шаги</p>${ data[ statusType ].steps.map(toTag).join("") }</ul>`;
   }
 
   #setHandlers(){
     const changer = (clickEvent) => {
-      this.fetchAllScore();
       this.statusType = clickEvent.target.id.replace("Stats", "");
+      this.fetchAllScore();
       this.updateUI(this.statusType);
     }
     document.querySelectorAll(".statsTypeChanger")
