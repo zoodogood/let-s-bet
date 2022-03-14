@@ -267,8 +267,9 @@ class Page {
                 .map(key => +key.slice(6));
 
               const minimal = Math.min(...steps);
+              const output = ending(minimal, "шаг", "ов", "", "а");
 
-              return ending(minimal, "шаг", "ов", "", "а");
+              return output === "Infinity шаг" ? "-" : output;
             })()
           },
           {

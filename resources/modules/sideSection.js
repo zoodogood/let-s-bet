@@ -9,7 +9,7 @@ class LeaderBoard {
   }
 
   #setHandlers(){
-    this.game.events.on("furnish", number => this.lastNumber = number);
+    this.game.events.on("furnish", ({value}) => this.lastNumber = value);
     this.game.events.on("starts", () => this.startsTimestamp = Date.now());
 
     this.game.events.on("fail", async ({ game }) => {
@@ -48,7 +48,6 @@ class LeaderBoard {
       }
 
       await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/score/EQUAL_${ score }?method=increment`, options);
-      console.log();
       const userScore = JSON.parse(localStorage["score"] ?? "{}");
       userScore[`EQUAL_${ score }`] = (userScore[`EQUAL_${ score }`] ?? 0) + 1;
       localStorage["score"] = JSON.stringify(userScore);
@@ -116,9 +115,9 @@ class LeaderBoard {
       referrerPolicy: "no-referrer",
       body: this.lastNumber
     }
-    fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/lastNumber?method=set`, options);
-    fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/leastNumber?method=minimum`, options);
-    fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/greatestNumber?method=maximum`, options);
+    await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/lastNumber?method=set`, options);
+    await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/leastNumber?method=minimum`, options);
+    await fetch(`https://stats-co.zoodogood.repl.co/let-s-bet/greatestNumber?method=maximum`, options);
 
     localStorage["lastNumber"] = this.lastNumber;
     localStorage["leastNumber"] = Math.min(+(localStorage["leastNumber"] ?? Infinity), this.lastNumber);
