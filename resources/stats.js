@@ -149,7 +149,7 @@ class Page {
             _handler: () => "<br>"
           },
           ...(() => {
-            const getRandomText = (stepCount) => [`За ${ ending(stepCount, "шаг", "ов", "", "а") }`, `Выиграно за ${ stepCount }`].random();
+            const getRandomText = (stepCount) => [`За ${ ending(stepCount, "шаг", "ов", "", "а") }`, `Выиграно за ${ stepCount }`, `Побед за ${ stepCount }`].random();
 
             const total = Object.values(this.stats.general.score)
                 .reduce((acc, count) => acc + count, 0);
@@ -177,8 +177,8 @@ class Page {
                 .reduce((acc, count) => acc + count, 0)
           },
           {
-            text: "Посещений сайта",
-            value: this.stats.user.visits
+            text: "Посетили сайт",
+            value: ending(this.stats.user.visits, "раз", "", "", "а")
           },
           {
             _handler: () => "<br>"
@@ -245,7 +245,7 @@ class Page {
             _handler: () => "<br>"
           },
           ...(() => {
-            const getRandomText = (stepCount) => [`За ${ ending(stepCount, "шаг", "ов", "", "а") }`, `Выиграно за ${ stepCount }`].random();
+            const getRandomText = (stepCount) => [`За ${ ending(stepCount, "шаг", "ов", "", "а") }`, `Выиграно за ${ stepCount }`, `Побед за ${ stepCount }`].random();
 
             const total = Object.values(this.stats.user.score)
                 .reduce((acc, count) => acc + count, 0);
