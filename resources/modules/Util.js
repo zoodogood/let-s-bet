@@ -2,6 +2,23 @@ function delay(ms){
   return new Promise(res => setTimeout(res, ms));
 }
 
+function beautifulPercent(percent){
+  const [entire, floatRemainder] = String(percent).split(".");
+  const isMinus = entire.at(0) === "-";
+  const THRESHOLDER = 3;
+
+  if (entire.length >= 3)
+    return `${ entire }%`;
+
+  if (floatRemainder === undefined)
+    return `${ entire }%`;
+
+  const index = [...floatRemainder].findIndex(digit => digit !== "0");
+
+  const float = floatRemainder.slice(0, -index + THRESHOLDER - entire.length);
+  return `${ entire }.${ float }%`;
+}
+
 
 function ending(numb = 0, wordBase, zerofifth, first, second, opt = {}) {
   numb = +numb;

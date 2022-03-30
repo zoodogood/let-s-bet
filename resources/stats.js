@@ -65,14 +65,15 @@ class Page {
     const isBlueTheme = statusType === "general";
     const node = document.querySelector("body > section");
 
-    if (isBlueTheme && this.stats.general === null)
-      return node.innerHTML = "<div id = 'fetchError'>Не удалось подружится с сервером<br><small style = 'font-size: 0.5em;'>Доступна локальная (Ваша) статистика</small></div>";
-
     const toTag = ({text, value, _handler, ...others}) => _handler ? _handler({text, value, ...others}) : `<li><b>${ text }:</b> ${ value }</li>`;
     const data = {};
 
     const initGeneralData = async () => {
       await this.fetchAllScore.fetchServerData();
+      
+      if (isBlueTheme && this.stats.general === null)
+        return node.innerHTML = "<div id = 'fetchError'>Не удалось подружится с сервером<br><small style = 'font-size: 0.5em;'>Доступна локальная (Ваша) статистика</small></div>";
+
       data.general = {
         main: [
           {
@@ -246,15 +247,15 @@ class Page {
           },
           {
             text: "Последнее угаданное число",
-            value: this.stats.general.lastNumber ?? "*не существует*"
+            value: this.stats.user.lastNumber ?? "*не существует*"
           },
           {
             text: "Наибольшее отгаданное",
-            value: this.stats.general.greatestNumber ?? "*отсуствует*"
+            value: this.stats.user.greatestNumber ?? "*отсуствует*"
           },
           {
             text: "Наименьшее из отгаданных",
-            value: this.stats.general.leastNumber ?? "*сыграйте, чтобы появилось*"
+            value: this.stats.user.leastNumber ?? "*сыграйте, чтобы появилось*"
           }
         ],
 
@@ -284,7 +285,7 @@ class Page {
 
             const total = Object.values(this.stats.user.score)
                 .reduce((acc, count) => acc + count, 0);
-            const getPercentage = (stepCount) => getVictorySize(stepCount) / total * 100;
+            const getPercentage = (stepCount) => beautifulPercent( getVictorySize(stepCount) / total * 100 );
             const getVictorySize = (stepCount) => table[`EQUAL_${ stepCount }`];
 
             const table = this.stats.user.score;
@@ -293,7 +294,7 @@ class Page {
               .map(key => +key.slice(6));
 
             steps.sort((a, b) => a - b);
-            return steps.map(stepCount => ({ text: getRandomText(stepCount), value: `${ ending( getVictorySize(stepCount), "раз", "", "", "а" ) } (${ getPercentage(stepCount) }%);`}));
+            return steps.map(stepCount => ({ text: getRandomText(stepCount), value: `${ ending( getVictorySize(stepCount), "раз", "", "", "а" ) } (${ getPercentage(stepCount) });`}));
           })()
         ]
       }
