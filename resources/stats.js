@@ -70,7 +70,7 @@ class Page {
 
     const initGeneralData = async () => {
       await this.fetchAllScore.fetchServerData();
-      
+
       if (isBlueTheme && this.stats.general === null)
         return node.innerHTML = "<div id = 'fetchError'>Не удалось подружится с сервером<br><small style = 'font-size: 0.5em;'>Доступна локальная (Ваша) статистика</small></div>";
 
@@ -173,7 +173,7 @@ class Page {
 
             const total = Object.values(this.stats.general.score)
                 .reduce((acc, count) => acc + count, 0);
-            const getPercentage = (stepCount) => getVictorySize(stepCount) / total * 100;
+            const getPercentage = (stepCount) => beautifulPercent( getVictorySize(stepCount) / total * 100 );
             const getVictorySize = (stepCount) => table[`EQUAL_${ stepCount }`];
 
             const table = this.stats.general.score;
