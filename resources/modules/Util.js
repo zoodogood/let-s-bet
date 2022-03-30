@@ -3,20 +3,34 @@ function delay(ms){
 }
 
 function beautifulPercent(percent){
-  const [entire, floatRemainder] = String(percent).split(".");
-  const isMinus = entire.at(0) === "-";
-  const THRESHOLDER = 3;
+  const isMinus = Math.sign(percent) === -1;
+  if (isMinus)
+    percent *= -1;
 
-  if (entire.length >= 3)
-    return `${ entire }%`;
+  const result = (entire, float = null) => `${ isMinus ? "-" : "" }${ entire }${ float ? `.${ float }` : "" }%`;
+
+  const [entire, floatRemainder] = String(percent).split(".");
+  const THRESHOLDER = 4;
+
+  if (entire.length >= THRESHOLDER)
+    return result(entire);
 
   if (floatRemainder === undefined)
-    return `${ entire }%`;
+    return result(entire);
 
-  const index = [...floatRemainder].findIndex(digit => digit !== "0");
+  const index = entire === "0" ? [...floatRemainder].findIndex(digit => digit !== "0") : 0;
 
-  const float = floatRemainder.slice(0, -index + THRESHOLDER - entire.length);
-  return `${ entire }.${ float }%`;
+  const cutZeros = (string) => {
+    while (string.at(-1) === "0")
+      string = string.slice(0, -1);
+
+    return string;
+  }
+  const float = cutZeros(
+    floatRemainder.slice(0, index + THRESHOLDER - entire.length)
+  );
+  
+  return result(entire, float);
 }
 
 
