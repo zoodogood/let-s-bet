@@ -182,7 +182,7 @@ class Page {
               .map(key => +key.slice(6));
 
             steps.sort((a, b) => a - b);
-            return steps.map(stepCount => ({ text: getRandomText(stepCount), value: `${ ending( getVictorySize(stepCount), "раз", "", "", "а" ) } (${ getPercentage(stepCount) }%);`}));
+            return steps.map(stepCount => ({ text: getRandomText(stepCount), value: `${ ending( getVictorySize(stepCount), "раз", "", "", "а" ) } (${ getPercentage(stepCount) });`}));
           })()
         ]
       }
