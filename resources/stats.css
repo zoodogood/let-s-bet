@@ -87,6 +87,8 @@ section:empty::before
   font-size: 2em;
   font-style: italic;
 
+  opacity: 0.8;
+
   align-self: center;
   margin-right: auto;
   margin-left: auto;
