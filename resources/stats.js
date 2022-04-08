@@ -140,11 +140,11 @@ class Page {
           },
           {
             text: "Наибольшее отгаданное",
-            value: this.stats.general.leastNumber ?? "*отсуствует*"
+            value: this.stats.general.greatestNumber ?? "*отсуствует*"
           },
           {
             text: "Наименьшее из отгаданных",
-            value: this.stats.general.greatestNumber ?? "*сыграйте, чтобы появилось*"
+            value: this.stats.general.leastNumber ?? "*сыграйте, чтобы появилось*"
           }
         ],
 

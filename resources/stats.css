@@ -81,6 +81,17 @@ section
   flex-grow: 1;
 }
 
+section:empty::before
+{
+  content: "Слабый хостинг, Загрузка...";
+  font-size: 2em;
+  font-style: italic;
+
+  align-self: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 ul
 {
   width: 50vw;
