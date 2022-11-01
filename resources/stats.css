@@ -50,6 +50,7 @@ header > *
 
 header *:hover
 {
+  transition: color 300ms;
   cursor: pointer;
   color: var( --mainColor );
 }
@@ -83,7 +84,7 @@ section
 
 section:empty::before
 {
-  content: "Слабый хостинг, Загрузка...";
+  content: "— Слабый хостинг, Загрузка...";
   font-size: 2em;
   font-style: italic;
 

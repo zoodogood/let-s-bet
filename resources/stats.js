@@ -135,15 +135,15 @@ class Page {
             _handler: () => "<br>"
           },
           {
-            text: "Последнее угаданное число",
+            text: "Последнее отгаданное число",
             value: this.stats.general.lastNumber ?? "*не существует*"
           },
           {
-            text: "Наибольшее отгаданное",
+            text: "Наибольшее",
             value: this.stats.general.greatestNumber ?? "*отсуствует*"
           },
           {
-            text: "Наименьшее из отгаданных",
+            text: "Наименьшее",
             value: this.stats.general.leastNumber ?? "*сыграйте, чтобы появилось*"
           }
         ],
@@ -246,15 +246,15 @@ class Page {
             _handler: () => "<br>"
           },
           {
-            text: "Последнее угаданное число",
+            text: "Последнее отгаданное число",
             value: this.stats.user.lastNumber ?? "*не существует*"
           },
           {
-            text: "Наибольшее отгаданное",
+            text: "Наибольшее",
             value: this.stats.user.greatestNumber ?? "*отсуствует*"
           },
           {
-            text: "Наименьшее из отгаданных",
+            text: "Наименьшее",
             value: this.stats.user.leastNumber ?? "*сыграйте, чтобы появилось*"
           }
         ],
