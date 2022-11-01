@@ -319,3 +319,13 @@ class Page {
 const page = new Page();
 page.fetchAllScore();
 page.updateUI(page.statusType);
+
+
+if (localStorage.darkTheme === undefined){
+  const result = confirm("Использовать темную тему?");
+  localStorage.darkTheme = result;
+}
+
+if (localStorage.darkTheme === "true"){
+  document.body.classList.add("dark-theme");
+}

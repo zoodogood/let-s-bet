@@ -342,3 +342,13 @@ class Counter {
     this.node.textContent = value;
   }
 }
+
+
+if (localStorage.darkTheme === undefined){
+  const result = confirm("Использовать темную тему?");
+  localStorage.darkTheme = result;
+}
+
+if (localStorage.darkTheme === "true"){
+  document.body.classList.add("dark-theme");
+}

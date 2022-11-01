@@ -62,6 +62,17 @@ body
   flex-direction: column;
 }
 
+body:not(.dark-theme)
+{
+  background-color: #ffffff;
+}
+
+body.dark-theme
+{
+  background-color: #1c1b1b;
+  filter: invert(1) opacity(0.7);
+}
+
 main
 {
   margin-bottom: 10vh;
