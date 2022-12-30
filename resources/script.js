@@ -1,4 +1,5 @@
 globalThis.snow = new SnowBackground();
+globalThis.formatter = new Intl.NumberFormat();
 
 
 
@@ -77,17 +78,17 @@ class Game {
         {
           id: "min",
           previous: "#",
-          next: this.number.min.toLocaleString(undefined, { useGrouping: true }),
+          next: formatter.format(this.number.min),
         },
         {
           id: "max",
           previous: "#",
-          next: this.number.max.toLocaleString(undefined, { useGrouping: true }),
+          next: formatter.format(this.number.max),
         },
         {
           id: "recommended",
           previous: previous[2],
-          next: Math.floor((this.number.min + this.number.max) / 2).toLocaleString(undefined, { useGrouping: true }),
+          next: formatter.format(Math.floor((this.number.min + this.number.max) / 2)),
         }
       ]
 
@@ -288,8 +289,9 @@ class InputHandler {
     this.node = node;
     this.game = game;
 
-    this.node.addEventListener("input", () => {
-      const value = this.node.value;
+    this.node.addEventListener("input", (inputEvent) => {
+      const value = this.#parseInt(this.node.value);
+
 
       if (value > 1_000_000)
         this.node.value = this.node.value.slice(0, -1);
@@ -297,11 +299,16 @@ class InputHandler {
       if (value < 0)
         this.node.value = 0;
 
+      if (inputEvent.inputType === "insertText"){
+        this.node.value = formatter.format(value);
+      }
+
       value ? this.node.classList.remove("shake-little") : this.node.classList.add("shake-little");
     });
 
     this.node.addEventListener("change", () => {
       const value = this.node.value;
+      
 
       if (value >= this.game.number.max)
         this.node.value = this.game.number.max - 1;
@@ -323,7 +330,9 @@ class InputHandler {
     this.node.classList.add("shake-little", "shake-constant", "shake-constant--hover");
   }
 
-
+  #parseInt(value){
+    return +String(value).replaceAll(/\D/g, "");
+  }
 }
 
 

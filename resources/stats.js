@@ -136,15 +136,15 @@ class Page {
           },
           {
             text: "Последнее отгаданное число",
-            value: this.stats.general.lastNumber ?? "*не существует*"
+            value: this.stats.general.lastNumber ? formatter.format(this.stats.general.lastNumber) : "*не существует*"
           },
           {
             text: "Наибольшее",
-            value: this.stats.general.greatestNumber ?? "*отсуствует*"
+            value: this.stats.general.greatestNumber ? formatter.format(this.stats.general.greatestNumber) : "*отсуствует*"
           },
           {
             text: "Наименьшее",
-            value: this.stats.general.leastNumber ?? "*сыграйте, чтобы появилось*"
+            value: this.stats.general.leastNumber ? formatter.format(this.stats.general.leastNumber) : "*сыграйте, чтобы появилось*"
           }
         ],
 
@@ -247,15 +247,15 @@ class Page {
           },
           {
             text: "Последнее отгаданное число",
-            value: this.stats.user.lastNumber ?? "*не существует*"
+            value: this.stats.user.lastNumber ? formatter.format(this.stats.user.lastNumber) : "*не существует*"
           },
           {
             text: "Наибольшее",
-            value: this.stats.user.greatestNumber ?? "*отсуствует*"
+            value: this.stats.user.greatestNumber ? formatter.format(this.stats.user.greatestNumber) : "*отсуствует*"
           },
           {
             text: "Наименьшее",
-            value: this.stats.user.leastNumber ?? "*сыграйте, чтобы появилось*"
+            value: this.stats.user.leastNumber ? formatter.format(this.stats.user.leastNumber) : "*сыграйте, чтобы появилось*"
           }
         ],
 

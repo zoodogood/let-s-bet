@@ -39,8 +39,10 @@ small
   font-size: 0.93em;
 }
 
-input
+main > input
 {
+  position: relative;
+
   border: none;
   outline: none;
   text-align: center;
