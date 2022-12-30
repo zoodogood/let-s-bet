@@ -1,0 +1,24 @@
+
+.ping-animation
+{
+  text-shadow: 0 0 red;
+  text-decoration: underline red;
+}
+
+
+.counter
+{
+  display: block;
+  position: fixed;
+  top: 5px;
+  left: 12px;
+
+  font-size: calc( 20px + 0.6vw );
+  font-family: monospace;
+}
+
+.counter::after
+{
+  content: "/100";
+  font-size: calc( 10px + 0.3vw );
+}
