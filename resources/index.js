@@ -169,7 +169,23 @@ class Game {
       return;
     }
 
-    this.events.emit("furnish", { game: this, value: parseInt(this.input.node.value) });
+    let value = parseInt(this.input.node.value);
+    
+    if (value >= this.number.max)
+      value = this.number.max - 1;
+
+    if (value <= this.number.min)
+      value = this.number.min + 1;
+
+    this.user.indicated = value;
+
+    
+
+    
+
+
+
+    this.events.emit("furnish", { game: this, value });
 
     if (!this.counter)
       this.counter = new Counter();
@@ -177,7 +193,7 @@ class Game {
     this.user.score++;
     this.counter.count( this.user.score );
 
-    this.user.indicated = parseInt(this.input.node.value);
+    
     this.input.node.value = "";
 
     if (this.user.indicated === this.number.value)
@@ -301,6 +317,7 @@ class InputHandler {
       if (inputEvent.inputType === "insertText"){
         this.node.value = formatter.format(value);
       }
+        
 
       value ? this.node.classList.remove("shake-little") : this.node.classList.add("shake-little");
     });
