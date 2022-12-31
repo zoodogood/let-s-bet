@@ -169,7 +169,7 @@ class Game {
       return;
     }
 
-    this.events.emit("furnish", { game: this, value: +this.input.node.value });
+    this.events.emit("furnish", { game: this, value: parseInt(this.input.node.value) });
 
     if (!this.counter)
       this.counter = new Counter();
@@ -177,7 +177,7 @@ class Game {
     this.user.score++;
     this.counter.count( this.user.score );
 
-    this.user.indicated = +this.input.node.value;
+    this.user.indicated = parseInt(this.input.node.value);
     this.input.node.value = "";
 
     if (this.user.indicated === this.number.value)
@@ -289,11 +289,11 @@ class InputHandler {
     this.game = game;
 
     this.node.addEventListener("input", (inputEvent) => {
-      const value = this.#parseInt(this.node.value);
+      const value = parseInt(this.node.value);
 
 
       if (value > 1_000_000)
-        this.node.value = this.node.value.slice(0, -1);
+        this.node.value = String(value).slice(0, -1);
 
       if (value < 0)
         this.node.value = 0;
@@ -306,7 +306,7 @@ class InputHandler {
     });
 
     this.node.addEventListener("change", () => {
-      const value = this.node.value;
+      const value = parseInt(this.node.value);
       
 
       if (value >= this.game.number.max)
@@ -327,10 +327,6 @@ class InputHandler {
     })
 
     this.node.classList.add("shake-little", "shake-constant", "shake-constant--hover");
-  }
-
-  #parseInt(value){
-    return +String(value).replaceAll(/\D/g, "");
   }
 }
 
